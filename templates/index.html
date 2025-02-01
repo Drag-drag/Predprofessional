@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="mb-4">Добро пожаловать в систему учета спортивного инвентаря</h1>
+            <p class="lead mb-5">Выберите нужный раздел для работы с системой</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-box-open fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Инвентарь</h5>
+                    <p class="card-text">Управление спортивным инвентарем, просмотр наличия и состояния</p>
+                    <a href="/inventory" class="btn btn-primary">Перейти к инвентарю</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-clipboard-list fa-3x mb-3 text-success"></i>
+                    <h5 class="card-title">Заявки</h5>
+                    <p class="card-text">Создание и управление заявками на использование инвентаря</p>
+                    <a href="/requests" class="btn btn-success">Перейти к заявкам</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

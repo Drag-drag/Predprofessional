@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login">Вход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register">Регистрация</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <!-- Форма входа -->
+                        <div class="tab-pane fade show active" id="login">
+                            <form id="loginForm" onsubmit="handleLogin(event)">
+                                <div class="mb-3">
+                                    <label for="loginUsername" class="form-label">Имя пользователя</label>
+                                    <input type="text" class="form-control" id="loginUsername" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Пароль</label>
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Войти</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Форма регистрации -->
+                        <div class="tab-pane fade" id="register">
+                            <form id="registerForm" onsubmit="handleRegister(event)">
+                                <div class="mb-3">
+                                    <label for="regUsername" class="form-label">Имя пользователя</label>
+                                    <input type="text" class="form-control" id="regUsername" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="regEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regPassword" class="form-label">Пароль</label>
+                                    <input type="password" class="form-control" id="regPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function handleLogin(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    try {
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+        
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem('token', data.access_token);
+            window.location.href = '/requests';
+        } else {
+            const error = await response.json();
+            showNotification('Ошибка!', error.detail, 'error');
+        }
+    } catch (error) {
+        showNotification('Ошибка!', 'Произошла ошибка при входе', 'error');
+        console.error('Ошибка:', error);
+    }
+}
+
+async function handleRegister(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('regUsername').value;
+    const email = document.getElementById('regEmail').value;
+    const password = document.getElementById('regPassword').value;
+    
+    try {
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password
+            })
+        });
+        
+        if (response.ok) {
+            showNotification(
+                'Успех!',
+                'Регистрация успешна. Теперь вы можете войти.',
+                'success'
+            );
+            document.getElementById('login-tab').click();
+            document.getElementById('registerForm').reset();
+        } else {
+            const error = await response.json();
+            showNotification('Ошибка!', error.detail, 'error');
+        }
+    } catch (error) {
+        showNotification('Ошибка!', 'Произошла ошибка при регистрации', 'error');
+        console.error('Ошибка:', error);
+    }
+}
+</script>
+{% endblock %}
+

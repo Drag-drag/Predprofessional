@@ -1,0 +1,67 @@
+/* Общие стили */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Стили для таблиц */
+.table-responsive {
+    margin-bottom: 1rem;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+/* Стили для статусов */
+.badge {
+    padding: 0.5em 0.75em;
+}
+
+/* Стили для кнопок действий */
+.btn-action {
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.25rem;
+}
+
+/* Стили для модальных окон */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Стили для форм */
+.form-label {
+    font-weight: 500;
+}
+
+/* Стили для уведомлений */
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1050;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .table-responsive {
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+}
